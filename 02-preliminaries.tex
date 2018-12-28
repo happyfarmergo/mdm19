@@ -1,0 +1,22 @@
+\section{Preliminaries}
+In this section, we first give a detailed description of MR data and some basic notations, then followed by the problem definition and overview of GANs \cite{DBLP:conf/nips/GoodfellowPMXWOCB14} with its variants.
+
+\subsection{Data Description and Notations}
+Telco localization techniques mostly focus on MR data, which is generated when MDs connect to nearby cells in Telco networks. Generally, the MR data can be categorized into two aspects: (1) connected cells data including cell ids, GPS locations; (2) continuous signal strength data, such as RSRP, RSSI. Table \ref{tab:mr} shows an example of MR record in 4G LTE network. The IMSI records a unique card ID and the MRTime preserves time stamp of once connection. Besides, A piece of MR records up to 6 nearby cells (eNodeBID and CellID) and radio signal strength indicators (RSSI) for each.
+
+
+
+\begin{table}\scriptsize
+\caption{An example of 4G LTE MR record}\label{tab:mr}
+  \centering
+  \begin{tabular}{|ll|ll|}
+  \hline
+  MRTime     &  {\textbf{2017/5/31 14:12:06}}  & IMSI & \textbf{***012}  \\ \hline
+  Serving\_eNodeBID & \textbf{99129}    &   Serving\_CellID & \textbf{1} \\ \hline
+  eNodeBID\_1 & \textbf{99129} &     CellID\_1 & \textbf{1}      \\ \hline
+  RSRP\_1       & \textbf{-93.26} & RSSI\_1          & \textbf{-67.18}   \\ \hline
+  ...      & ...                  & ...      & ...        \\ \hline
+  eNodeBID\_6 & \textbf{99145}                & CellID\_6 & \textbf{5} \\ \hline
+  RSRP\_6           & \textbf{-90.02} & RSSI\_6          & \textbf{-50.92}  \\ \hline
+  \end{tabular}
+\end{table} 
