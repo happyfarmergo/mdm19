@@ -34,7 +34,7 @@ The MR missing data problem refers to missing of RSSI from neighboring cells. We
 \right.
 \end{equation}
 
-Note that we can retrieve binary vector $b$ from $\hat{r}$.
+Note that we can recover binary vector $b$ from $\hat{r}$.
 
 The detail of the problem studied in this paper is described in Problem \ref{prob:miss}.
 
@@ -43,7 +43,7 @@ The detail of the problem studied in this paper is described in Problem \ref{pro
 \end{problem}
 
 \subsection{Basic of GANs}
-The key of Generative Adversarial Nets (GANs) \cite{DBLP:conf/nips/GoodfellowPMXWOCB14} is to play a competing game between two networks. The generator network $G$ takes noise vector $z$ as input and generates fake data. The discriminator network $D$ takes a data sample (real/fake) as input and try to classify the sample accurately. In contrast, the generator $G$ try to generate realistic data to fool discriminator $D$. Hence, the two networks $G$ and $D$ play a minimax game which can be formulated as:
+The key of Generative Adversarial Nets (GANs) \cite{DBLP:conf/nips/GoodfellowPMXWOCB14} is to play a competing game between two networks. The generator network $G$ takes noise vector $z$ as input and generates fake data. The discriminator network $D$ takes a data sample (real/generated) as input and try to classify the sample accurately. In contrast, the generator $G$ try to generate realistic data to fool discriminator $D$. Hence, the two networks $G$ and $D$ play a minimax game which can be formulated as:
 
 \begin{equation}\label{eq:gan}
   \min\limits_G \max\limits_D \mathbb{E}_{\textbf{x}\sim p_(\textbf{x})}[\log D(\textbf{x})]+\mathbb{E}_{\textbf{z}\sim p( \textbf{z})}[\log(1-D(G(\textbf{z})))]
@@ -57,6 +57,6 @@ However, the unstable training process makes GANs hard to train. It has been sho
   L_{CLS}(x, y, l)=L_{CE}(D(x,y),\ell)
 \end{equation}
 
-where $x$, $y$ and $l$ denote observed variables, missing variables and associated label respectively. The discriminator is trained to minimize the classification loss of data samples, and meanwhile distinguish data samples (real/fake).
+where $x$, $y$ and $l$ denote observed variables, missing variables and associated label respectively. The discriminator is trained to minimize the classification loss of data samples, and meanwhile distinguish data samples (real/generated).
 
-Inspired by the above methodologies, we propose our TelcoGAN model by adopting a deep localization model in a unified generative adversarial network, utilizing the available GPS label information in training data. 
+Inspired by the above methodologies, we propose our TelcoGAN model by adopting a deep localization model in a unified generative adversarial network, utilizing the available GPS label information in training data.
