@@ -11,13 +11,13 @@ In this section, we introduce our TelcoGAN model for Telco missing data completi
 \subsection{Overview of TelcoGAN}
 The TelcoGAN model consists of pre-processing step and three basic components. The framework of TelcoGAN is illustrated as Fig. \ref{fig:framework}.
 
-In the pre-processing step, due to sparse extensive cell locations in MR data, we propose to apply a relative coordinate space. The sparse global coordinate-based distribution of MR data is transformed into a dense relative coordinate-based distribution. Thus the TelcoGAN model can better capture the internal correlation of cell locations and corresponding RSSI.
+In the pre-processing step, due to sparse extensive cell locations in MR data, we propose to apply a serving-centric space. Then the sparse global coordinate-based distribution of MR data is transformed into a dense relative coordinate-based distribution. Thus TelcoGAN model can better capture the internal correlation of MR data.
 
 The adversarial learning step consists of three interacting components described as follows:
 
 (1) \textbf{Generator} $\bar{\textbf{m}}\sim$ G(\textbf{z},$\hat{\textbf{m}}$, \textbf{b}): The generator takes a random vector, an incomplete MR matrix and corresponding binary vector as input, and generates a completed MR matrix $\bar{\textbf{m}}$ that fools the discriminator as well as makes localizer produce accurate predictions.
 
-(2) \textbf{Discriminator} D($\bar{\textbf{m}}/\textbf{m}$): The discriminator takes either a generated MR sample or a real MR sample as input, and gives each sample the probability over two categories (real/generated).
+(2) \textbf{Discriminator} D($\bar{\textbf{m}}/\textbf{m}$): The discriminator takes either a generated MR sample or a real MR sample as input, and gives each sample the probability over two categories (real/completed).
 
 (3) \textbf{Localizer} L($\bar{\textbf{m}}/\textbf{m}$, $\textbf{l}$): The localizer takes a pair of MR sample and corresponding location label as input. It tries to predict the position of MR sample and minimize the localization loss.
 
@@ -26,7 +26,14 @@ The intuition of how our TelcoGAN model can generate high quality MR data for Te
 We choose to implement these three components as neural networks. We will discuss their detailed structures for generating complete MR data in the following subsections.
 
 
-\subsection{Relative Coordinate Space}
+\subsection{Serving-centric Space}
+The goal here is to tackle \emph{Complex internal relationship} by constructing a serving-centric space for MR data.
+
+As seen in Table. \ref{tab:mr}, a piece of MR sample records up to 6 nearby cells: the serving cell (i.e., Serving\_eNodeBID and Serving\_CellID, the same as eNodeBID\_1 and CellID\_1) and the neighboring cells (i.e., eNodeBID\_i and CellID\_i, $2\leq$ i $\leq 6$). According to Telco operations \cite{DBLP:conf/infocom/RayDM16}, the serving cell is selected from these nearby cells with good connection, which indicates close distance to mobile device. Given the total MR records with extensive global spatial domain, we group them as multiple local spatial domains by same serving cell. Then the whole city-scale area is divided into multiple small spatial domains.
+
+Based on the division above, we propose a \emph{serving-centric space}, to fold the sparse global spatial distribution into a dense local one. In Fig. .
+
+The \textbf{rational} behind \emph{Serving-centric space} is not difficult to understand: suppose normal cells and similar RF environment, in principle, the received signal strengths are only decided by the relative locations of all cells and the connected MD. The \emph{Serving-centric space} offers advantages as: 1) reveal true internal relationship of MR data and 2) knowledge learned from a 
 
 \subsection{TelcoGAN Generator}
 

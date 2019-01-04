@@ -2,9 +2,9 @@
 In this section, we first give a detailed description of MR data and some basic notations, then followed by the problem definition and overview of GANs \cite{DBLP:conf/nips/GoodfellowPMXWOCB14} with its variants.
 
 \subsection{Data Description and Notations}
-Telco localization techniques mostly focus on MR data, which are generated when MDs connect to nearby cell towers in Telco networks. Generally, the MR data can be categorized into two aspects: (1) connected cells data including cell ids, GPS locations; (2) continuous signal strength data, such as RSRP, RSSI. Table \ref{tab:mr} shows an example of MR record in 4G LTE network. A piece of MR record contains up to 6 nearby cells (eNodeBID and CellID) and radio signal strength indicators (RSSI) for each. Besides, it also marks a user ID (IMSI: International Mobile Subscriber identification Number) and connection time stamp (MRTime).
+Telco localization techniques mostly focus on MR data, which are generated when MDs connect to nearby cell towers in Telco networks. Generally, the MR data can be categorized into two aspects: (1) connected cells data including cell ids, cell locations; (2) continuous signal strength data, such as RSRP, RSSI. Table \ref{tab:mr} shows an example of MR record in 4G LTE network. A piece of MR record contains up to 6 nearby cells (\textbf{eNodeBID} and \textbf{CellID}) and radio signal strength indicators (RSSI) for each. Besides, it also marks a user ID (\textbf{IMSI}: International Mobile Subscriber identification Number) and connection time stamp (\textbf{MRTime}). Normally, Telco networks set one of the nearby cells as serving cell to provide data services or communication for the connected device. The serving cell is highlighted as \textbf{Serving\_eNodeBID} and \textbf{Serving\_CellID}, the same as the fist connected cell (\textbf{eNodeBID\_1} and \textbf{CellID\_1}).
 
-For the rest of this paper, a MR record and associated GPS label are denoted by $m$ and $l$ respectively. For a MR record vector $m$, it consists of cell id vector $c$, cell coordinate vector $d$ and RSSI vector $r$ with equal length as 6. Note that to protect privacy of involved users, we delete IMSI to reduce risk.
+For the rest of this paper, a MR record and associated GPS label are denoted by $m$ and $l$ respectively. For a MR record $m$, it consists of cell id vector $c$, cell coordinate vector $d$ and RSSI vector $r$ with equal length as 6. Note that to protect privacy of involved users, we delete \textbf{IMSI} to reduce risk.
 
 \begin{table}\scriptsize
 \caption{An example of 4G LTE MR record}\label{tab:mr}
@@ -12,7 +12,7 @@ For the rest of this paper, a MR record and associated GPS label are denoted by 
   \begin{tabular}{|l|l||l|l|}
   \hline
   \textbf{Field}    & \textbf{Value}                 & \textbf{Field}    & \textbf{Value}   \\ \hline \hline
-  MRTime            & {\textbf{2017/5/31 14:12:06}}  & IMSI              & \textbf{***012}  \\ \hline
+  MRTime            & \textbf{2017/5/31 14:12:06}    & IMSI              & \textbf{***012}  \\ \hline
   Serving\_eNodeBID & \textbf{99129}                 & Serving\_CellID   & \textbf{1}       \\ \hline
   eNodeBID\_1       & \textbf{99129}                 & CellID\_1         & \textbf{1}       \\ \hline
   RSRP\_1           & \textbf{-93.26}                & RSSI\_1           & \textbf{-67.18}  \\ \hline
