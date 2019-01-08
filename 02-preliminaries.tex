@@ -39,17 +39,17 @@ Note that we can recover binary vector $b$ from $\hat{r}$.
 The detail of the problem studied in this paper is described in Problem \ref{prob:miss}.
 
 \begin{problem}\label{prob:miss}
-  \textbf{[Telco Missing Data Completion]}: For an incomplete MR record $m$ with RSSI vector $\hat{r}$, we aim at filling the missingness of $\hat{r}$ and generating $r$, given the cell id vector $c$ and cell coordinate vector $d$.
+  \textbf{[Telco Missing Data Completion]}: For an incomplete MR record $\hat{m}=\{c,d,\hat{r}\}$, we aim at filling the missingness of $\hat{r}$ and generating complete MR record $m$.
 \end{problem}
 
 \subsection{Basic of GANs}
 The key of Generative Adversarial Nets (GANs) \cite{DBLP:conf/nips/GoodfellowPMXWOCB14} is to play a competing game between two networks. The generator network $G$ takes noise vector $z$ as input and generates fake data. The discriminator network $D$ takes a data sample (real/generated) as input and try to classify the sample accurately. In contrast, the generator $G$ try to generate realistic data to fool discriminator $D$. Hence, the two networks $G$ and $D$ play a minimax game which can be formulated as:
 
 \begin{equation}\label{eq:gan}
-  \min\limits_G \max\limits_D \mathbb{E}_{\textbf{x}\sim p_(\textbf{x})}[\log D(\textbf{x})]+\mathbb{E}_{\textbf{z}\sim p( \textbf{z})}[\log(1-D(G(\textbf{z})))]
+  \min\limits_G \max\limits_D \mathbb{E}_{\textbf{x}\sim p(\textbf{x})}[\log D(\textbf{x})]+\mathbb{E}_{\textbf{z}\sim p( \textbf{z})}[\log(1-D(G(\textbf{z})))]
 \end{equation}
 
-where $p_(\textbf{x})$ denotes real data distribution, $p_(\textbf{z})$ is noise distribution such as the uniform distribution or the normal distribution. The two networks are trained iteratively towards the optimization of objective function \ref{eq:gan}.
+where $p(\textbf{x})$ denotes real data distribution, $p(\textbf{z})$ is noise distribution such as the uniform distribution or the normal distribution. The two networks are trained iteratively towards the optimization of objective function \ref{eq:gan}.
 
 However, the unstable training process makes GANs hard to train. It has been shown in previous work \cite{DBLP:conf/icml/OdenaOS17} that the label information can help stabilize training, leading to improved quality of generated data. The auxiliary classification procedure is employed to help discriminator distinguish input samples from different label categories. A most recent work on multi-modality data completion employs the auxiliary label information and verifies the improvement \cite{DBLP:conf/kdd/CaiWGSJ18}. The proposed classification loss is described as follows:
 
