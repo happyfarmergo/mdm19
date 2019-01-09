@@ -29,11 +29,11 @@ We choose to implement these three components as neural networks. We will discus
 \subsection{Serving-centric Space}
 The goal here is to tackle \emph{Complex internal relationship} by constructing a serving-centric space for MR data.
 
-As seen in Table. \ref{tab:mr}, a piece of MR sample records up to 6 nearby cells: the serving cell (i.e., Serving\_eNodeBID and Serving\_CellID, the same as eNodeBID\_1 and CellID\_1) and the neighboring cells (i.e., eNodeBID\_i and CellID\_i, $2\leq$ i $\leq 6$). According to Telco operations \cite{DBLP:conf/infocom/RayDM16}, the serving cell is selected from these nearby cells with good connection, which indicates close distance to mobile device. Given the total MR records with extensive global spatial domain, we group them as multiple local spatial domains by same serving cell. Then the whole city-scale area is divided into multiple small spatial domains.
+As seen in Table. \ref{tab:mr}, among 6 connected cells, . According to Telco operations \cite{DBLP:conf/infocom/RayDM16}, the serving cell is selected from these nearby cells with good connection, which indicates close distance to mobile device. Given the total MR records with extensive global spatial domain, we group them as multiple local spatial domains by same serving cell. Then the whole city-scale area is divided into multiple small spatial domains.
 
 Based on the division above, we propose a \emph{serving-centric space}, to fold the sparse global spatial distribution into a dense local one. In Fig. .
 
-The \textbf{rational} behind \emph{Serving-centric space} is not difficult to understand: suppose normal cells and similar RF environment, in principle, the received signal strengths are only decided by the relative locations of all cells and the connected MD. The \emph{Serving-centric space} offers advantages as: 1) reveal true internal relationship of MR data and 2) knowledge learned from a 
+The \textbf{rational} behind \emph{Serving-centric space} is not difficult to understand: suppose normal cells and similar RF environment, in principle, the received signal strengths are only decided by the relative locations of all cells and the connected MD. The \emph{Serving-centric space} offers advantages as: 1) reveal true internal relationship of MR data and 2) knowledge learned from a spatial domain can transfer to another domain and improve data quality.
 
 \subsection{TelcoGAN Generator}
 
