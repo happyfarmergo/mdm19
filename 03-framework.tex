@@ -38,11 +38,20 @@ The \textbf{rational} behind serving-centric space is not difficult to understan
 \subsection{TelcoGAN Generator}
 The goal here is to generate completed MR data by modelling the conditional probability of completed MR data given missing MR data.
 
-The generator G takes 
+The generator G takes a MR record $\hat{m}$ with missing RSSI, a random noise vector $z$ and an indicator vector $b$ as input, and outputs a complete MR record $\bar{m}$. The generator G is realized as convolutional neural networks (CNN), due to its capability of learning complex interactions. The process of generator G can be formulated by:
 
+\begin{equation}\label{eq:gen}
+  \tilde{m} = G(\hat{m}, (1-b)\odot z)
+\end{equation}
+
+where $\odot$ denotes element-wise multiplication. $(1-b)\odot z$ indicates random values to fill in missing RSSI in $\hat{m}$, that is, G uses random noise vector to replace the missingness for initialization of incomplete MR. Then G learns the conditional probability $P(\tilde{m}|\hat{m}, b, z)$ by convolutional nets.
 
 \subsection{TelcoGAN Discriminator}
+The TelcoGAN discriminator aims to differentiate completed MR records from the real ones by modelling the distribution of MR data.
+
+The discriminator D takes either a completed MR record or a real MR record as input, and outputs the probability over two categories (real/completed). The D learns the probability of MR data $P(m)$ by full-convolution structure.
 
 \subsection{TelcoGAN Localizer}
+
 
 \subsection{TelcoGAN Training}
