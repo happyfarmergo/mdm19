@@ -1,10 +1,10 @@
 \section{Preliminaries}
-In this section, we first give a detailed description of MR data and some basic notations, then followed by the problem definition and overview of GANs \cite{DBLP:conf/nips/GoodfellowPMXWOCB14} with its variants.
+In this section, we first give a detailed description of MR data and the problem definition, next illustrate the solution overview, and finally give the basic of GANs \cite{DBLP:conf/nips/GoodfellowPMXWOCB14}.
 
-\subsection{Data Description and Notations}
+\subsection{Data Description and Problem Definition}
 Telco localization techniques mostly focus on MR data, which are generated when MDs connect to nearby cell towers in Telco networks. Generally, the MR data can be categorized into two aspects: (1) connected cells data including cell ids, cell locations; (2) continuous signal strength data, such as RSRP, RSSI. Table \ref{tab:mr} shows an example of MR record in 4G LTE network. A piece of MR record contains up to 6 nearby cells (\textbf{eNodeBID} and \textbf{CellID}) and radio signal strength indicators (RSSI) for each. Besides, it also marks a user ID (\textbf{IMSI}: International Mobile Subscriber identification Number) and connection time stamp (\textbf{MRTime}). Normally, Telco networks set one of the nearby cells as serving cell to provide data services or communication for the connected device. The serving cell is highlighted as \textbf{Serving\_eNodeBID} and \textbf{Serving\_CellID}, the same as the fist connected cell (\textbf{eNodeBID\_1} and \textbf{CellID\_1}).
 
-For the rest of this paper, a MR record and associated GPS label are denoted by $m$ and $l$ respectively. For a MR record $m$, it consists of cell id vector $c$, cell coordinate vector $d$ and RSSI vector $r$ with equal length as 6. Note that to protect privacy of involved users, we delete \textbf{IMSI} to reduce risk.
+%For the rest of this paper, a MR record and associated GPS label are denoted by $m$ and $l$ respectively. For a MR record $m$, it consists of cell id vector $c$, cell coordinate vector $d$ and RSSI vector $r$ with equal length as 6. Note that to protect privacy of involved users, we delete \textbf{IMSI} to reduce risk.
 
 \begin{table}\scriptsize
 \caption{An example of 4G LTE MR record}\label{tab:mr}
@@ -22,34 +22,36 @@ For the rest of this paper, a MR record and associated GPS label are denoted by 
   \end{tabular}
 \end{table}
 
-\subsection{Problem Definition}
-The MR missing data problem refers to missing of RSSI from neighboring cells. We assume that RSSI from any neighboring cell can be missing randomly (i.e., from $r_2$ to $r_6$). In addition, the binary vector $b=\{b_i\}_{i=1}^6$ taken values in $\{0, 1\}$ indicates which part of RSSI vector $r$ could be lost. Thus, an incomplete RSSI vector $\hat{r}$ can be defined as follow:
+%The MR missing data problem refers to missing of RSSI from neighboring cells. We assume that RSSI from any neighboring cell can be missing randomly (i.e., from $r_2$ to $r_6$). In addition, the binary vector $b=\{b_i\}_{i=1}^6$ taken values in $\{0, 1\}$ indicates which part of RSSI vector $r$ could be lost. Thus, an incomplete RSSI vector $\hat{r}$ can be defined as follow:
+%
+%\begin{equation}\label{eq:rssi}
+%\hat{r_i}=\left\{
+%\begin{aligned}
+%&r_i, & \text{if}\enspace b_i=1 \\
+%&nan,  & \text{otherwise}
+%\end{aligned}
+%\right.
+%\end{equation}
 
-\begin{equation}\label{eq:rssi}
-\hat{r_i}=\left\{
-\begin{aligned}
-&r_i, & \text{if}\enspace b_i=1 \\
-&nan,  & \text{otherwise}
-\end{aligned}
-\right.
-\end{equation}
+%Note that we can recover binary vector $b$ from $\hat{r}$.
 
-Note that we can recover binary vector $b$ from $\hat{r}$.
-
-The detail of the problem studied in this paper is described in Problem \ref{prob:miss}.
+%The detail of the problem studied in this paper is described in Problem \ref{prob:miss}.
 
 \begin{problem}\label{prob:miss}
-  \textbf{[Telco Missing Data Completion]}: For an incomplete MR record $m$ with RSSI vector $\hat{r}$, we aim at filling the missingness of $\hat{r}$ and generating $r$, given the cell id vector $c$ and cell coordinate vector $d$.
+  \textbf{[Telco Missing Data Completion]}: For a MR record with missing RSSI, Telco missing data completion problem is to recover a MR record with complete RSSI.
 \end{problem}
+
+\subsection{Solution Overview}
+
 
 \subsection{Basic of GANs}
 The key of Generative Adversarial Nets (GANs) \cite{DBLP:conf/nips/GoodfellowPMXWOCB14} is to play a competing game between two networks. The generator network $G$ takes noise vector $z$ as input and generates fake data. The discriminator network $D$ takes a data sample (real/generated) as input and try to classify the sample accurately. In contrast, the generator $G$ try to generate realistic data to fool discriminator $D$. Hence, the two networks $G$ and $D$ play a minimax game which can be formulated as:
 
 \begin{equation}\label{eq:gan}
-  \min\limits_G \max\limits_D \mathbb{E}_{\textbf{x}\sim p_(\textbf{x})}[\log D(\textbf{x})]+\mathbb{E}_{\textbf{z}\sim p( \textbf{z})}[\log(1-D(G(\textbf{z})))]
+  \min\limits_G \max\limits_D \mathbb{E}_{\textbf{x}\sim p(\textbf{x})}[\log D(\textbf{x})]+\mathbb{E}_{\textbf{z}\sim p( \textbf{z})}[\log(1-D(G(\textbf{z})))]
 \end{equation}
 
-where $p_(\textbf{x})$ denotes real data distribution, $p_(\textbf{z})$ is noise distribution such as the uniform distribution or the normal distribution. The two networks are trained iteratively towards the optimization of objective function \ref{eq:gan}.
+where $p(\textbf{x})$ denotes real data distribution, $p(\textbf{z})$ is noise distribution such as the uniform distribution or the normal distribution. The two networks are trained iteratively towards the optimization of objective function \ref{eq:gan}.
 
 However, the unstable training process makes GANs hard to train. It has been shown in previous work \cite{DBLP:conf/icml/OdenaOS17} that the label information can help stabilize training, leading to improved quality of generated data. The auxiliary classification procedure is employed to help discriminator distinguish input samples from different label categories. A most recent work on multi-modality data completion employs the auxiliary label information and verifies the improvement \cite{DBLP:conf/kdd/CaiWGSJ18}. The proposed classification loss is described as follows:
 
