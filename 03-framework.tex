@@ -30,18 +30,10 @@ Here we construct a serving-centric space for MR data to better learn the intern
 
 As seen in Table. \ref{tab:mr}, each MR record has a serving cell. According to Telco operations \cite{DBLP:conf/infocom/RayDM16}, the serving cell is selected from these nearby cells with good connection, which means close distance to mobile device. Thus a serving cell indicates a specific spatial domain. Given the total MR records with extensive global spatial domain, we group them as multiple local spatial domains by the serving cell. Then the whole city-scale area is divided into multiple small spatial domains.
 
-<<<<<<< HEAD
-As seen in Table. \ref{tab:mr}, among 6 connected cells, . According to Telco operations \cite{DBLP:conf/infocom/RayDM16}, the serving cell is selected from these nearby cells with good connection, which indicates close distance to mobile device. Given the total MR records with extensive global spatial domain, we group them as multiple local spatial domains by same serving cell. Then the whole city-scale area is divided into multiple small spatial domains.
-=======
 Based on the division above, we propose a \emph{serving-centric space}, to transform the sparse global spatial distribution into a dense local one. In Fig. , a spatial domain is an area centered on the serving cell. Provided the cell tower database from Telco operators, we can obtain the GPS coordinate location of each cell. Based on the cell location data, we can do coordinate conversion as follows. Suppose the GPS coordinate (longitude, latitude) of the serving cell is $(x_0,y_0)$, those of the neighboring cells are $\{(x_i,y_i)\}$($1\leq i\leq 5$). Under the serving-centric space, the new coordinates are $(0,0)$ and $\{(x_i-x_0,y_i-y_0)\}$($1\leq i\leq 5$) for the serving cell and the neighboring cells respectively.
->>>>>>> b02095b0baba0ec99676fa4c5448097aa6adc555
 
 The \textbf{rational} behind serving-centric space is not difficult to understand: suppose normal cells and similar RF environment, in principle, the received signal strengths are only decided by the relative locations of connected cells and the MD. The serving-centric space offers advantages as: 1) reveal the true internal relationship of MR data and 2) knowledge learned from a domain can transfer to another domain and improve data quality.
 
-<<<<<<< HEAD
-The \textbf{rational} behind \emph{Serving-centric space} is not difficult to understand: suppose normal cells and similar RF environment, in principle, the received signal strengths are only decided by the relative locations of all cells and the connected MD. The \emph{Serving-centric space} offers advantages as: 1) reveal true internal relationship of MR data and 2) knowledge learned from a spatial domain can transfer to another domain and improve data quality.
-=======
->>>>>>> b02095b0baba0ec99676fa4c5448097aa6adc555
 
 \subsection{TelcoGAN Generator}
 The goal here is to generate completed MR data by modelling the conditional probability of completed MR data given missing MR data.
