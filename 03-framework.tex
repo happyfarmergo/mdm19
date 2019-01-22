@@ -49,14 +49,14 @@ b_i=\left\{
 \right.
 \end{equation}
 
-so that $b$ indicates which positions of $\hat{r}$ are missing. 
+so that $b$ indicates which positions of $\hat{r}$ are missing.
 
 Thus, the missing values of $\hat{r}$ is filled with $(1-b)\odot z$, where $\odot$ denotes element-wise multiplication. The input data matrix of generator G is computed as $\{x', y', \hat{r}+(1-b)\odot z\}$. The generator G can be formulated with:
 
 \begin{eqnarray}
 % \nonumber % Remove numbering (before each equation)
   \tilde{m} &=& G(z, \hat{m}, b) \\
-  \bar{m}   &=& \tilde{r}\odot (1-b) + \hat{r}\odot b
+  \bar{m}   &=& \tilde{m}\odot (1-b) + \hat{m}\odot b
 \end{eqnarray}
 
 To capture the internal relationship between observed components and missing components, we construct an encoder-decoder network as generator network. The encoder network consists of convolutional layers, and the decoder network consists of deconvolutional layers. The encoder network is used to extract features that reflects context of MR record such as location, environment and etc. Because the input incomplete MR matrix and output completed MR matrix have the same size, the deconvolutional layers of decoder network are used to restore information of MR record. We use convolution kernel with $3\times 3$ in convolutional layers to reduce the size of input data matrix.
@@ -64,9 +64,9 @@ To capture the internal relationship between observed components and missing com
 \subsection{TelcoGAN Discriminator}
 The TelcoGAN discriminator aims to differentiate completed MR records from the real ones by modelling the distribution of MR data.
 
-The discriminator D takes either a completed MR record or a real MR record as input, and outputs the probability over two categories (real/completed). The D learns the probability of MR data $P(m)$ by full-convolution structure.
+The discriminator D can be formulated as a function $D(\bar{m}/m)$, that takes a real MR record or a completed MR record from generator G as input and outputs probability over two categories (real/completed). We model D as several convolutional layers and a fully connected layer for classification.
 
 \subsection{TelcoGAN Localizer}
-The TelcoGAN localizer is designed to exploit the available position labels in training phase. 
+The TelcoGAN localizer is designed to exploit the available position labels in training phase.
 
 \subsection{TelcoGAN Training}
